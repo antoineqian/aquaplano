@@ -4,9 +4,10 @@ import { useThree } from '@react-three/fiber'
 import { FlowFieldParticles } from './FlowFieldParticles'
 import { EffectComposer, Vignette, SMAA, Bloom, HueSaturation } from '@react-three/postprocessing'
 
-const World = ({ points, colors }) => {
+const World = ({ points, colors, postProcessing }) => {
   const lightRef = useRef()
   const { scene } = useThree()
+
 
   useEffect(() => {
     scene.background = new THREE.Color('#123456')
@@ -51,9 +52,13 @@ const World = ({ points, colors }) => {
         </mesh>
       </FlowFieldParticles>
       <EffectComposer>
-        <Vignette offset={0.1} darkness={0.5} />
-        <HueSaturation saturation={0.12} />
-        <Bloom intensity={5} />
+        <Vignette
+          offset={0.25}
+          darkness={0.5}
+        />
+        <SMAA />
+        <HueSaturation saturation={postProcessing.saturation} />
+        <Bloom intensity={postProcessing.bloomIntensity} />
       </EffectComposer>
     </>
   )

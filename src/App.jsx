@@ -14,6 +14,10 @@ function App() {
     color1: '#00b4d8',
     color2: '#0077b6',
   })
+  const [postProcessing, setPostProcessing] = useState({
+    saturation: 0.12,
+    bloomIntensity: 5,
+  });
   const gui = useRef(null)
 
   useEffect(() => {
@@ -35,14 +39,23 @@ function App() {
     const colorFolder = gui.current.addFolder('Colors')
     colorFolder.addColor(colors, 'color1').onChange(v => setColors(c => ({ ...c, color1: v })))
     colorFolder.addColor(colors, 'color2').onChange(v => setColors(c => ({ ...c, color2: v })))
-  }, [points, colors])
+
+    const fxFolder = gui.current.addFolder('Post FX');
+
+    fxFolder.add(postProcessing, 'saturation', -1, 1, 0.01).onChange(v =>
+      setPostProcessing(p => ({ ...p, saturation: v }))
+    );
+    fxFolder.add(postProcessing, 'bloomIntensity', 0, 10, 0.1).onChange(v =>
+      setPostProcessing(p => ({ ...p, bloomIntensity: v }))
+    );
+  }, [points, colors, postProcessing])
 
   return (
     <Canvas
       style={{ height: '100vh' }}
       camera={{ position: [0, 10, 0], up: [0, 0, -1], near: 0.1, far: 100 }}
     >
-      <World points={points} colors={colors} />
+      <World points={points} colors={colors} postProcessing={postProcessing} />
     </Canvas>
   )
 }
