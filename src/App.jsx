@@ -11,7 +11,10 @@ function App() {
     p2: { x: 0, y: 0.4, z: 2 },
     p3: { x: 2, y: 0.15, z: -2 },
   })
-
+  const [colors, setColors] = useState({
+    color1: '#00b4d8', // aqua
+    color2: '#0077b6', // marine
+  })
   const gui = useRef(null)
 
   useEffect(() => {
@@ -29,7 +32,10 @@ function App() {
     const folder3 = gui.current.addFolder('Point 3')
     folder3.add(points.p3, 'x', -10, 10, 0.1).onChange(v => setPoints(p => ({ ...p, p3: { ...p.p3, x: v } })))
     folder3.add(points.p3, 'z', -10, 10, 0.1).onChange(v => setPoints(p => ({ ...p, p3: { ...p.p3, z: v } })))
-  }, [points])
+    const colorFolder = gui.current.addFolder('Colors')
+    colorFolder.addColor(colors, 'color1').onChange(v => setColors(c => ({ ...c, color1: v })))
+    colorFolder.addColor(colors, 'color2').onChange(v => setColors(c => ({ ...c, color2: v })))
+  }, [points, colors])
 
   const tube = useMemo(() => {
     const controlPoints = [
@@ -54,7 +60,7 @@ function App() {
 
       <pointLight position={[10, 10, 10]} />
 
-      <FlowFieldParticles shape="disc" size={1.5}>
+      <FlowFieldParticles shape="disc" size={1.5} colors={[colors.color1, colors.color2]}>
         <mesh geometry={tube}>
           <meshStandardMaterial color='blue' />
         </mesh>
