@@ -1,9 +1,10 @@
 import './App.css'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { FlowFieldParticles } from './FlowFieldParticles'
 import { useMemo, useState, useRef, useEffect } from 'react'
 import * as dat from 'dat.gui'
+import { EffectComposer, Vignette, SMAA, Bloom, HueSaturation } from "@react-three/postprocessing";
 
 function App() {
   const [points, setPoints] = useState({
@@ -53,6 +54,10 @@ function App() {
   }, [points])
   const lightRef = useRef()
 
+  // const scene = useThree(state => state.scene);
+  // useEffect(() => {
+  //   scene.background = new Color("#123456");
+  // }, [scene]);
 
   return (
     <Canvas
@@ -79,7 +84,12 @@ function App() {
           <meshStandardMaterial color='blue' />
         </mesh>
       </FlowFieldParticles>
-
+      <EffectComposer>
+        <Vignette offset={0.1} darkness={0.5} />
+        <SMAA />
+        <HueSaturation saturation={0.12} />
+        <Bloom intensity={5} />
+      </EffectComposer>
     </Canvas>
   )
 }
