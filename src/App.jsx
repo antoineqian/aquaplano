@@ -1,6 +1,5 @@
 import './App.css'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { FlowFieldParticles } from './FlowFieldParticles'
 import { useMemo, useState, useRef, useEffect } from 'react'
@@ -34,11 +33,11 @@ function App() {
 
   const tube = useMemo(() => {
     const controlPoints = [
-      new THREE.Vector3(-6, 0.2, 0),                      // fixed start
+      new THREE.Vector3(-6, 5, 3),                      // fixed start
       new THREE.Vector3(points.p1.x, points.p1.y, points.p1.z),
       new THREE.Vector3(points.p2.x, points.p2.y, points.p2.z),
       new THREE.Vector3(points.p3.x, points.p3.y, points.p3.z),
-      new THREE.Vector3(6, 0.1, 0),                       // fixed end
+      new THREE.Vector3(10, 0.1, -6.5),                       // fixed end
     ]
 
     const curve = new THREE.CatmullRomCurve3(controlPoints)
@@ -48,11 +47,10 @@ function App() {
   }, [points])
 
   return (
-    <Canvas style={{ height: '100vh', background: 'white' }
-    }
+    <Canvas
+      style={{ height: '100vh', background: 'white' }}
       camera={{ position: [0, 10, 0], up: [0, 0, -1], near: 0.1, far: 100 }}>
       <ambientLight />
-      <primitive object={new THREE.AxesHelper(5)} />
 
       <pointLight position={[10, 10, 10]} />
 
@@ -62,7 +60,6 @@ function App() {
         </mesh>
       </FlowFieldParticles>
 
-      <OrbitControls />
     </Canvas>
   )
 }
