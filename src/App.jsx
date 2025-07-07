@@ -51,16 +51,30 @@ function App() {
     geometry.computeVertexNormals()
     return geometry
   }, [points])
+  const lightRef = useRef()
+
 
   return (
     <Canvas
       style={{ height: '100vh', background: 'white' }}
       camera={{ position: [0, 10, 0], up: [0, 0, -1], near: 0.1, far: 100 }}>
       <ambientLight />
+      <spotLight
+        ref={lightRef}
+        position={[0, 10, 0]}
+        angle={0.3}
+        penumbra={0.5}
+        intensity={2}
+        color={'#ffffff'}
+        castShadow
+      />
 
       <pointLight position={[10, 10, 10]} />
 
-      <FlowFieldParticles shape="disc" size={1.5} colors={[colors.color1, colors.color2]}>
+      <FlowFieldParticles shape="disc"
+        size={1.5}
+        colors={[colors.color1, colors.color2]}
+        lightSource={lightRef}>
         <mesh geometry={tube}>
           <meshStandardMaterial color='blue' />
         </mesh>
