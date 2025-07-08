@@ -36,45 +36,21 @@ else {
     float timer = uDeltaTime;
     float strength = 0.01;
 
-    float flowZ = -0.03;
-    float flowX = sin(particle.z * 0.15 + particle.x * 0.5 + uTime) * 0.01;
-    float flowY = sin(particle.z * 0.3 + particle.y * 0.5 + uTime) * 0.005;
-
-    vec3 noiseFlow = vec3(
-        simplexNoise4d(vec4(particle.xyz, uTime)),
-        simplexNoise4d(vec4(particle.yxz, uTime)),
-        simplexNoise4d(vec4(particle.zxy, uTime))
+    vec3 flowField = vec3(
+        simplexNoise4d(vec4(particle.xyz , uTime)),
+        simplexNoise4d(vec4(particle.yxz + 1.0, uTime)),
+        simplexNoise4d(vec4(particle.zxy + 2.0, uTime))
     ) * 0.003;
-
-    vec3 flowField = vec3(flowX, flowY, flowZ) + noiseFlow;
 
     float baseSpeed = 0.03 + sin(particle.z * 0.05 + particle.x) * 0.01;
 
-    // Forward flow (Z axis)
-    particle.z -= baseSpeed * uDeltaTime;
-
-    // Curving left and right
-    particle.x += sin(particle.z * 0.15 + particle.x * 0.2 + uTime) * 0.01;
-
-    // Up/down bouncing
-    particle.y += sin(particle.z * 0.3 + particle.x * 0.3 + uTime) * 0.005;
-
-    // Clamp Y
-    particle.y = max(0.1, particle.y);
-
-    // Wrap Z to reset when out of view (simulate infinite river)
-    if (particle.z < -10.0) {
-        particle.z = 10.0;
-        particle.x = (fract(sin(dot(particle.xy ,vec2(12.9898,78.233))) * 43758.5453) - 0.5) * 4.0;
-        particle.y = fract(sin(dot(particle.zy ,vec2(93.9898,67.345))) * 43758.5453);
-    }
     if(disturbIntensity > 0.0){
         particle.xyz += flowField * disturbIntensity * strength * particle.a;
         particle.a += uDeltaTime;
     } else {
         particle.a += uDeltaTime;
-        particle.xyz += flowField;
+        // particle.xyz += flowField * uDeltaTime;
     }
 }
-gl_FragColor.rgba = particle;
+    gl_FragColor.rgba = particle;
 }
