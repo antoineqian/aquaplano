@@ -34,15 +34,14 @@ if (particle.a >= 1.0) {
 else {
     float disturbIntensity = (uDisturbIntensity > 0.0) ? pow(uDisturbIntensity, 2.0) : 0.0;
     float timer = uDeltaTime;
-    float strength = 0.01;
+    float strength = 0.05;
 
     vec3 flowField = vec3(
         simplexNoise4d(vec4(particle.xyz , uTime)),
         simplexNoise4d(vec4(particle.yxz + 1.0, uTime)),
         simplexNoise4d(vec4(particle.zxy + 2.0, uTime))
-    ) * 0.003;
-
-    float baseSpeed = 0.03 + sin(particle.z * 0.05 + particle.x) * 0.01;
+    );
+    flowField = normalize(flowField);
 
     if(disturbIntensity > 0.0){
         particle.xyz += flowField * disturbIntensity * strength * particle.a;
