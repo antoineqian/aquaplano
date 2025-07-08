@@ -1,0 +1,60 @@
+/* Overlay visibility */
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.overlay.show {
+  opacity: 1;
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+/* Modal box centered */
+.modal {
+  position: absolute;
+  width: 560px;
+  height: 280px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Modal content initially hidden */
+.modal-inner {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.5s ease;
+}
+
+/* Animate on modal open */
+.modal.animate .modal-inner {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Line animation */
+svg line {
+  stroke-width: 2px;
+  stroke: rgba(2, 162, 239, 1);
+}
+
+.modal.animate svg #svg_2,
+.modal.animate svg #svg_3,
+.modal.animate svg #svg_4,
+.modal.animate svg #svg_5 {
+  stroke-dasharray: 1680;
+  stroke-dashoffset: 1680;
+  animation: anim-dash 0.6s ease forwards;
+}
+
+@keyframes anim-dash {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}

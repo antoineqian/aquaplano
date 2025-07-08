@@ -311,6 +311,7 @@ const FlowFieldParticles = ({
       setInitMeshRef(pendingInitMeshRef.current);
     }
   }, [initMeshRef]);
+
   const labelRef = useRef();
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -327,6 +328,7 @@ const FlowFieldParticles = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showLabel]);
+
   return (
     <group ref={ref}>
       {particles && (
