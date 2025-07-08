@@ -28,6 +28,7 @@ void main() {
 
     gl_PointSize = aParticlesSize * lifeSize * uSize * uResolution.y;
     gl_PointSize *= (1.0 / - viewPosition.z);
+    
     /* Variables to the fragment Shader */
     vColor = uColors;
     vPosition = position.xyz;
