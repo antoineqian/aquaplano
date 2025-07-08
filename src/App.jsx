@@ -3,7 +3,6 @@ import { Canvas } from '@react-three/fiber'
 import { useState, useRef, useEffect } from 'react'
 import * as dat from 'dat.gui'
 import World from './World'
-import { Perf } from 'r3f-perf'
 
 function App() {
   const [points, setPoints] = useState({
@@ -56,10 +55,45 @@ function App() {
       style={{ height: '100vh' }}
       camera={{ position: [0, 10, 0], up: [0, 0, -1], near: 0.1, far: 100 }}
     >
-      <Perf position="top-left" />
 
       <World points={points} colors={colors} postProcessing={postProcessing} />
     </Canvas>
+
+    <div
+      style={{
+        position: 'absolute',
+        bottom: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 10,
+        pointerEvents: 'none'
+      }}
+    >
+      <img
+        src="/assets/glass.png"
+        alt="Glass of water"
+        style={{
+          width: '40px',
+          height: '40px',
+        }}
+      />
+      <img
+        src="/assets/water-pollution.png"
+        alt="Water pollution"
+        style={{
+          width: '40px',
+          height: '40px',
+        }}
+      />
+      <img
+        src="/assets/river.png"
+        alt="River"
+        style={{
+          width: '40px',
+          height: '40px',
+        }}
+      />
+    </div>
   </>
 }
 
