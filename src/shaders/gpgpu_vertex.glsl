@@ -10,12 +10,14 @@ uniform float uDisturbIntensity;
 uniform float uRepulsionForce;
 uniform bool uInteractive;
 uniform sampler2D uBaseParticlesTexture;
+uniform sampler2D uTangentTexture;
 
 void main() {
 // resolution + uParticles are given by the GPUComputationRenderer
 vec2 uv = gl_FragCoord.xy / resolution.xy;
 vec4 particle =  texture2D(uParticles, uv);
 vec4 baseParticle = texture2D(uBaseParticlesTexture, uv);
+vec3 tangent = texture2D(uTangentTexture, uv).xyz;
 float uRepelStrength = clamp(uMouseDelta, 0.0, uRepulsionForce);
 vec3 particlePos = particle.xyz;
 vec3 mousePos = uMouse.xyz;
@@ -34,14 +36,16 @@ if (particle.a >= 1.0) {
 else {
     float disturbIntensity = (uDisturbIntensity > 0.0) ? pow(uDisturbIntensity, 2.0) : 0.0;
     float timer = uDeltaTime;
-    float strength = 0.05;
+    float strength = 0.2;
 
-    vec3 flowField = vec3(
-        simplexNoise4d(vec4(particle.xyz , uTime)),
+    vec3 noiseFlow = vec3(
+        simplexNoise4d(vec4(particle.xyz, uTime)),
         simplexNoise4d(vec4(particle.yxz + 1.0, uTime)),
         simplexNoise4d(vec4(particle.zxy + 2.0, uTime))
     );
-    flowField = normalize(flowField);
+    float noiseInfluence = 1.0; // tweakable
+    vec3 flowField = normalize(mix(tangent, tangent + noiseFlow, noiseInfluence));
+    // flowField = tangent;
 
     if(disturbIntensity > 0.0){
         particle.xyz += flowField * disturbIntensity * strength * particle.a;

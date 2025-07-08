@@ -82,6 +82,7 @@ const FlowFieldParticles = ({
   repulsionForce = 1.0,
   shape = "disc",
   lightSource = null,
+  curve = null,
   children,
 }) => {
   const [initMeshRef, setInitMeshRef] = useState(null);
@@ -126,6 +127,18 @@ const FlowFieldParticles = ({
       dataTexture.image.data[i * 4 + 2] = modelGeometry.attributes.position.array[i * 3 + 2];
       dataTexture.image.data[i * 4 + 3] = Math.random();
     }
+    const tangentTexture = GCR.createTexture();
+    for (let i = 0; i < modelGeometry.count; i++) {
+      // Get relative t value along the curve (0 to 1)
+      const t = i / (modelGeometry.count - 1);
+
+      // Get tangent direction from the curve
+      const tangent = curve.getTangent(t).normalize();
+
+      tangentTexture.image.data[i * 4 + 0] = tangent.x;
+      tangentTexture.image.data[i * 4 + 1] = tangent.y;
+      tangentTexture.image.data[i * 4 + 2] = tangent.z;
+    }
 
     const particlesVariable = GCR.addVariable("uParticles", GpgpuFragmentShader, dataTexture);
     GCR.setVariableDependencies(particlesVariable, [particlesVariable]);
@@ -143,6 +156,7 @@ const FlowFieldParticles = ({
     particlesVariable.material.uniforms.uMouse = new Uniform(new Vector3(0, 0, 0));
     particlesVariable.material.uniforms.uMouseDelta = new Uniform(0);
     particlesVariable.material.uniforms.uInteractive = new Uniform(interactive);
+    particlesVariable.material.uniforms.uTangentTexture = new Uniform(tangentTexture);
 
     return { ref: GCR, texture: renderTargetTexture, particlesVariable, size };
   }, [modelGeometry]);

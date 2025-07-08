@@ -13,20 +13,23 @@ const World = ({ points, colors, postProcessing }) => {
     scene.background = new THREE.Color('#123456')
   }, [scene])
 
-  const tube = useMemo(() => {
+  const curve = useMemo(() => {
     const controlPoints = [
       new THREE.Vector3(-6, 5, 3),
       new THREE.Vector3(points.p1.x, points.p1.y, points.p1.z),
       new THREE.Vector3(points.p2.x, points.p2.y, points.p2.z),
       new THREE.Vector3(points.p3.x, points.p3.y, points.p3.z),
       new THREE.Vector3(10, 0.1, -6.5),
-    ]
+    ];
 
-    const curve = new THREE.CatmullRomCurve3(controlPoints)
+    return new THREE.CatmullRomCurve3(controlPoints);
+  }, [points]);
+
+  const tube = useMemo(() => {
     const geometry = new THREE.TubeGeometry(curve, 300, 1, 25, false)
     geometry.computeVertexNormals()
     return geometry
-  }, [points])
+  }, [curve])
 
   return (
     <>
@@ -46,6 +49,7 @@ const World = ({ points, colors, postProcessing }) => {
         size={1.5}
         colors={[colors.color1, colors.color2]}
         lightSource={lightRef}
+        curve={curve}
       >
         <mesh geometry={tube}>
           <meshStandardMaterial color="blue" />
