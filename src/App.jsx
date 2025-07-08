@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { useState, useRef, useEffect } from 'react'
 import * as dat from 'dat.gui'
 import World from './World'
+import { Perf } from 'r3f-perf'
 
 function App() {
   const [points, setPoints] = useState({
@@ -50,14 +51,16 @@ function App() {
     );
   }, [points, colors, postProcessing])
 
-  return (
+  return <>
     <Canvas
       style={{ height: '100vh' }}
       camera={{ position: [0, 10, 0], up: [0, 0, -1], near: 0.1, far: 100 }}
     >
+      <Perf position="top-left" />
+
       <World points={points} colors={colors} postProcessing={postProcessing} />
     </Canvas>
-  )
+  </>
 }
 
 export default App
