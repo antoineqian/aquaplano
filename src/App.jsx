@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { useState, useRef, useEffect } from 'react'
 import * as dat from 'dat.gui'
 import World from './World'
+import Icon from './Icon'
 
 function App() {
   const [points, setPoints] = useState({
@@ -66,33 +67,14 @@ function App() {
         left: '50%',
         transform: 'translateX(-50%)',
         zIndex: 10,
-        pointerEvents: 'none'
+        pointerEvents: 'none',
       }}
     >
-      <img
-        src="/assets/glass.png"
-        alt="Glass of water"
-        style={{
-          width: '40px',
-          height: '40px',
-        }}
-      />
-      <img
-        src="/assets/water-pollution.png"
-        alt="Water pollution"
-        style={{
-          width: '40px',
-          height: '40px',
-        }}
-      />
-      <img
-        src="/assets/river.png"
-        alt="River"
-        style={{
-          width: '40px',
-          height: '40px',
-        }}
-      />
+      <div style={{ display: 'flex', gap: '16px' }}>
+        <Icon src="/assets/glass.png" alt="Glass of water" />
+        <Icon src="/assets/water-pollution.png" alt="Water pollution" />
+        <Icon src="/assets/river.png" alt="River" />
+      </div>
     </div>
   </>
 }
