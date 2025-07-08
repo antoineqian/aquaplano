@@ -23,7 +23,7 @@ const World = ({ points, colors, postProcessing }) => {
     ]
 
     const curve = new THREE.CatmullRomCurve3(controlPoints)
-    const geometry = new THREE.TubeGeometry(curve, 300, 0.3, 16, false)
+    const geometry = new THREE.TubeGeometry(curve, 300, 1, 25, false)
     geometry.computeVertexNormals()
     return geometry
   }, [points])
