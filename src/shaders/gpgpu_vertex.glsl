@@ -49,7 +49,7 @@ else {
         particle.a += uDeltaTime;
     } else {
         particle.a += uDeltaTime;
-        // particle.xyz += flowField * uDeltaTime;
+        particle.xyz += flowField * uDeltaTime;
     }
 }
     gl_FragColor.rgba = particle;

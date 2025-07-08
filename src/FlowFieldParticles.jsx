@@ -290,6 +290,13 @@ const FlowFieldParticles = ({
     DebugMessage(`${name} - <FlowFieldParticles />`, "blue");
   }
   const [showLabel, setShowLabel] = useState(false)
+  const pendingInitMeshRef = useRef(null);
+
+  useEffect(() => {
+    if (pendingInitMeshRef.current && !initMeshRef) {
+      setInitMeshRef(pendingInitMeshRef.current);
+    }
+  }, [initMeshRef]);
 
   return (
     <group ref={ref}>
@@ -302,7 +309,7 @@ const FlowFieldParticles = ({
         ref={meshRef}
         visible={childMeshVisible}
         onUpdate={e => {
-          if (e) setInitMeshRef(e);
+          if (e) pendingInitMeshRef.current = e;
         }}
         onPointerMove={handlePointerMove}
         onPointerOver={handlePointerOver}
