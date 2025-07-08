@@ -16,8 +16,8 @@ function App() {
     color2: '#0077b6',
   })
   const [postProcessing, setPostProcessing] = useState({
-    saturation: 0.12,
-    bloomIntensity: 5,
+    saturation: 0.33,
+    bloomIntensity: 1,
   });
   const gui = useRef(null)
 
