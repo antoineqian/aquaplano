@@ -311,7 +311,22 @@ const FlowFieldParticles = ({
       setInitMeshRef(pendingInitMeshRef.current);
     }
   }, [initMeshRef]);
+  const labelRef = useRef();
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (labelRef.current && !labelRef.current.contains(event.target)) {
+        setShowLabel(false);
+      }
+    };
 
+    if (showLabel) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showLabel]);
   return (
     <group ref={ref}>
       {particles && (
@@ -341,7 +356,7 @@ const FlowFieldParticles = ({
       )}
       {showLabel && (
         <Html position={[0, 2, 0]} center>
-          <div style={{ background: 'white', padding: '0.5em 1em', borderRadius: '0.5em' }}>
+          <div ref={labelRef} style={{ background: 'white', padding: '0.5em 1em', borderRadius: '0.5em' }}>
             This is a river!
           </div>
         </Html>
