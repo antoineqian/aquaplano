@@ -1,17 +1,11 @@
-import { useMemo, useRef, useEffect } from 'react'
+import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { useThree } from '@react-three/fiber'
 import { FlowFieldParticles } from './FlowFieldParticles'
 import { EffectComposer, Vignette, SMAA, Bloom, HueSaturation } from '@react-three/postprocessing'
-
+import { Sky } from '@react-three/drei'
 const World = ({ points, colors, postProcessing }) => {
   const lightRef = useRef()
-  const { scene } = useThree()
-
-
-  useEffect(() => {
-    scene.background = new THREE.Color('#123456')
-  }, [scene])
 
   const curve = useMemo(() => {
     const controlPoints = [
@@ -33,6 +27,7 @@ const World = ({ points, colors, postProcessing }) => {
 
   return (
     <>
+      <Sky />
       <ambientLight />
       <spotLight
         ref={lightRef}
