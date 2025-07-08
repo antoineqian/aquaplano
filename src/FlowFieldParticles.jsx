@@ -66,9 +66,11 @@ const InitMeshWrapper = forwardRef(({ children, visible, onUpdate, onPointerMove
 
   return <>{clonedChildren}</>;
 });
+
 const DebugMessage = (mssg, color = "red") => {
   console.log(`%c ${mssg}`, `color: white; background-color: ${color}; font-size: 12px; padding: 4px; border-radius: 4px;`);
 };
+
 const FlowFieldParticles = ({
   debug = false,
   name = null,
@@ -107,6 +109,7 @@ const FlowFieldParticles = ({
     const { count } = attributes.position;
     return { geometry, material, attributes, count };
   }, [modelMesh]);
+
   const gpgpu = useMemo(() => {
     if (!modelGeometry) return;
     if (debug) {
@@ -155,7 +158,7 @@ const FlowFieldParticles = ({
       for (let x = 0; x < gpgpu.size; x++) {
         const i = y * gpgpu.size + x;
         const i2 = i * 2;
-        const uvX = (x + 0.5) / gpgpu.size; // (x+0.5) pour centrer le px
+        const uvX = (x + 0.5) / gpgpu.size;
         const uvY = (y + 0.5) / gpgpu.size;
         // Set UV Position
         particlesUvArray[i2 + 0] = uvX;

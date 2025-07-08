@@ -25,7 +25,7 @@ void main() {
     gl_Position = projectedPosition;
     /* Point Size */
     float lifeSize = smoothstep(0.0, 1.0, sin(particle.a * PI));
-    // float lifeSize = 1.0;
+
     gl_PointSize = aParticlesSize * lifeSize * uSize * uResolution.y;
     gl_PointSize *= (1.0 / - viewPosition.z);
     /* Variables to the fragment Shader */
