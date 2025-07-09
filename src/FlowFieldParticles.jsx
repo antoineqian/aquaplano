@@ -199,6 +199,7 @@ const FlowFieldParticles = ({
       mouseRef.current.set(x, y, z);
     }
   }, []);
+  const [labelPosition, setLabelPosition] = useState([0, 2, 0]);
   const handlePointerOver = useCallback(e => {
     document.body.style.cursor = 'pointer'
     e.stopPropagation();
@@ -209,6 +210,8 @@ const FlowFieldParticles = ({
   }, []);
   const handleClick = useCallback(e => {
     e.stopPropagation()
+    const point = e.point;
+    setLabelPosition([point.x, point.y + 0.5, point.z]);
     setShowLabel(true)
   }, []);
 
@@ -357,9 +360,9 @@ const FlowFieldParticles = ({
         </mesh>
       )}
       {showLabel && (
-        <Html position={[0, 2, 0]} center>
+        <Html position={labelPosition} center>
           <div ref={labelRef} style={{ background: 'white', padding: '0.5em 1em', borderRadius: '0.5em' }}>
-            This is a river!
+            Glou glou! L'eau c'est la vie !
           </div>
         </Html>
       )}
