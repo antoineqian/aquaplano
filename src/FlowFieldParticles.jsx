@@ -6,6 +6,7 @@ import { Html } from '@react-three/drei'
 import ParticlesFragmentShader from './shaders/particle_fragment.glsl'
 import GpgpuFragmentShader from './shaders/gpgpu_vertex.glsl'
 import ParticlesVertexShader from './shaders/particle_vertex.glsl'
+import "./label.css";
 
 const ParticlesMaterial = memo(
   forwardRef((props, ref) => {
@@ -360,8 +361,8 @@ const FlowFieldParticles = ({
         </mesh>
       )}
       {showLabel && (
-        <Html position={labelPosition} center>
-          <div ref={labelRef} style={{ background: 'white', padding: '0.5em 1em', borderRadius: '0.5em' }}>
+        <Html position={labelPosition} className="label-animate" center>
+          <div ref={labelRef} style={{ background: 'white', whiteSpace: 'nowrap', padding: '0.5em 1em', borderRadius: '0.5em' }}>
             Glou glou! L'eau c'est la vie !
           </div>
         </Html>
