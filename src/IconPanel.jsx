@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Modal from "./Modal";
 import Icon from "./Icon";
 
@@ -7,22 +7,22 @@ const iconsData = [
     id: "glass",
     src: "/assets/glass.png",
     alt: "Glass of water",
-    title: "Drinking Water",
-    content: "Not all clear water is safe to drink. Always purify it in the wild."
+    title: "Potabilité",
+    content: "L’eau en montagne n’est pas systématiquement potable. Même si elle paraît claire et pure, elle peut contenir des bactéries, virus, parasites, déjections animales ou polluants chimiques, notamment à proximité des pâturages, refuges ou villages de montagne."
   },
   {
     id: "pollution",
     src: "/assets/water-pollution.png",
     alt: "Water pollution",
-    title: "Pollution Alert",
-    content: "44% of large rivers have lower flow rates, concentrating pollutants."
+    title: "Pollution",
+    content: "En 2007, des pesticides étaient détectés dans 91 % des points de suivi des cours d’eau français.  Une étude de 2020 révèle que 36 % des échantillons de rivières, lacs ou étangs analysés étaient contaminés par au moins une substance perfluorée (PFAS)."
   },
   {
     id: "river",
     src: "/assets/river.png",
     alt: "River",
-    title: "Rivers in Danger",
-    content: "PFAS and other chemicals contaminate many French rivers."
+    title: "Débit",
+    content: "44 % des plus grands fleuves du monde ont vu leur débit diminuer en 35 ans, principalement à cause du changement climatique et de la consommation accrue d’eau pour l’agriculture, l’industrie et l’urbanisation. Moins d’eau signifie une dilution moindre des polluants présents (pesticides, métaux lourds, résidus pharmaceutiques), ce qui augmente leur concentration dans les rivières et les nappes."
   }
 ];
 
