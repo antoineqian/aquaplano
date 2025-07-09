@@ -49,7 +49,8 @@
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
-  transition: all 0.5s ease;
+  transition: transform 1s ease, opacity 1s ease;
+  transform: scale(0.95);
   z-index: 1;
 }
 
@@ -71,7 +72,7 @@ svg line {
 .modal.animate svg #svg_5 {
   stroke-dasharray: 1680;
   stroke-dashoffset: 1680;
-  animation: anim-dash 0.6s ease forwards;
+  animation: anim-dash 2.6s ease forwards;
 }
 
 @keyframes anim-dash {
