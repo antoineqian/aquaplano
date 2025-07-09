@@ -56,7 +56,6 @@
 
 /* Animate on modal open */
 .modal.animate .modal-inner {
-  /* background: black; */
   opacity: 1;
   transform: scale(1);
 }

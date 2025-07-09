@@ -6,7 +6,6 @@ const Modal = ({ isOpen, onClose, children }) => {
 
   useEffect(() => {
     if (isOpen) {
-      // Wait one tick after mounting before adding animation class
       const timer = requestAnimationFrame(() => {
         setShowAnimation(true);
       });
